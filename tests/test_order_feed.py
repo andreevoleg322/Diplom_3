@@ -96,5 +96,6 @@ class TestOrderFeed:
         order_feed.click_order_exit_button()
 
         order_feed.click_order_feed()
+        assert order_feed.wait_order_appears_in_progress(order_number), "Заказ не появился"
         order_number_work = order_feed.text_order_number_work()
         assert order_number in order_number_work

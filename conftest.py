@@ -12,7 +12,7 @@ def driver(request):
 
     browser_name = request.param
     driver = WebDriverFactory.get_driver(browser_name)
-    driver.get(Url.url_login)
+    driver.get(Url.URL_LOGIN)
 
     yield driver
 
@@ -31,7 +31,7 @@ def test_user():
         "name": fake.name()
     }
 
-    response = requests.post(Url.user_register, json=test_user_data)
+    response = requests.post(Url.USER_REGISTER, json=test_user_data)
     response_body = response.json()
 
     yield {
@@ -42,4 +42,4 @@ def test_user():
 
     access_token = response_body.get('accessToken')
     if access_token:
-        requests.delete(Url.user_delete, headers={'Authorization': access_token})
+        requests.delete(Url.USER_DELETE, headers={'Authorization': access_token})

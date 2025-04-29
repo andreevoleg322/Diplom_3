@@ -11,7 +11,7 @@ class TestPasswordRecovery:
         password_recovery_page = PasswordRecoveryPage(driver)
         password_recovery_page.wait_button_recovery_password()
         password_recovery_page.click_button_recovery_password()
-        assert password_recovery_page.get_url() == Url.url_password_recovery
+        assert password_recovery_page.get_url() == Url.URL_PASSWORD_RECOVERY
 
     @allure.description("Ввод почты и клик по кнопке «Восстановить»")
     @allure.title("Ввод почты и клик по кнопке «Восстановить»")
@@ -25,7 +25,7 @@ class TestPasswordRecovery:
         password_recovery_page.click_button_recovery()
         password_recovery_page.wait_displaying_save()
 
-        assert password_recovery_page.get_url() == Url.url_new_password
+        assert password_recovery_page.get_url() == Url.URL_NEW_PASSWORD
 
     @allure.description("Клик по кнопке показать/скрыть пароль делает поле активным — подсвечивает его")
     @allure.title("Клик по кнопке показать/скрыть пароль делает поле активным — подсвечивает его")
@@ -37,4 +37,4 @@ class TestPasswordRecovery:
         password_recovery_page.click_button_recovery()
         password_recovery_page.click_eye_icon()
 
-        assert password_recovery_page.check_active_password
+        assert password_recovery_page.check_active_password()

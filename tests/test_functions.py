@@ -12,7 +12,7 @@ class TestFunctions:
 
         function.wait_button_constructor()
         function.click_button_constructor()
-        assert function.check_url() == Url.url_constructor
+        assert function.check_url() == Url.URL_CONSTRUCTOR
 
     @allure.description("Переход по клику на «Лента заказов»")
     @allure.title("Переход по клику на «Лента заказов»")
@@ -45,7 +45,7 @@ class TestFunctions:
         function.click_ingredient()
         function.wait_closed()
         function.click_closed()
-        assert function.check_closed
+        assert function.check_closed()
 
     @allure.description("При добавлении ингредиента в заказ, увеличивается каунтер данного ингредиента")
     @allure.title("При добавлении ингредиента в заказ, увеличивается каунтер данного ингредиента")
@@ -70,4 +70,4 @@ class TestFunctions:
         function.wait_bun()
         function.drag_and_drop_ingredient_to_burger_area()
         function.click_order()
-        assert function.check_order
+        assert function.check_order()

@@ -18,7 +18,7 @@ class TestPersonalAccount:
 
         account_page.wait_history_order()
 
-        assert account_page.check_url() == Url.url_personal_account
+        assert account_page.check_url() == Url.URL_PERSONAL_ACCOUNT
 
     @allure.description("Переход в раздел «История заказов»")
     @allure.title("Переход в раздел «История заказов»")
@@ -34,7 +34,7 @@ class TestPersonalAccount:
         account_page.wait_history_order()
         account_page.click_history_order()
 
-        assert account_page.check_url() == Url.url_history_order
+        assert account_page.check_url() == Url.URL_HISTORY_ORDER
 
     @allure.description("Выход из аккаунта")
     @allure.title("Выход из аккаунта")
@@ -50,4 +50,4 @@ class TestPersonalAccount:
         account_page.wait_history_order()
         account_page.click_exit()
 
-        assert account_page.wait_button_account
+        assert account_page.wait_button_account()

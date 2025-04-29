@@ -1,9 +1,13 @@
+from selenium.common import TimeoutException
+from selenium.webdriver.support.wait import WebDriverWait
+
 from locators.order_feed_locators import OrderLocators
 from pages.base_page import BasePage
 import allure
 import time
 
 class OrderFeed(BasePage):
+
     @allure.step('Ожидание кнопки Лента заказов')
     def wait_order_feed(self):
         self.wait_visibility_element(OrderLocators.BUTTON_ORDER_FEED)
@@ -96,3 +100,12 @@ class OrderFeed(BasePage):
     def text_order_number_work(self):
         self.wait_clickable_element(OrderLocators.ORDER_NUMBER_WORK)
         return self.get_text_element(OrderLocators.ORDER_NUMBER_WORK)
+
+    def wait_order_appears_in_progress(self, expected_number, timeout=10):
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                lambda d: expected_number in self.text_order_number_work()
+            )
+            return True
+        except TimeoutException:
+            return False

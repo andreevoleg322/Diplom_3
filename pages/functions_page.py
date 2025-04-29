@@ -1,6 +1,10 @@
+from selenium.common import TimeoutException
+
 from locators.functions_locators import FunctionsLocators
 from pages.base_page import BasePage
 import allure
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 class FunctionsPage(BasePage):
     @allure.step("Ожидание кнопки «Конструктор»")
@@ -37,7 +41,14 @@ class FunctionsPage(BasePage):
 
     @allure.step("Проверить отсутствие крестика")
     def check_closed(self):
-        return not self.check_displaying_element(FunctionsLocators.INGREDIENT_CLOSE)
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located(FunctionsLocators.INGREDIENT_CLOSE)
+            )
+            return True
+        except TimeoutException:
+            return False
+        #return not self.check_displaying_element(FunctionsLocators.INGREDIENT_CLOSE)
 
     @allure.step("Перетаскивание ингредиента в конструктор")
     def drag_and_drop_ingredient_to_burger_area(self):
@@ -48,6 +59,9 @@ class FunctionsPage(BasePage):
 
     @allure.step("Получить количество ингредиентов")
     def get_count_of_ingredients(self):
+        WebDriverWait(self.driver, 10).until(
+            EC.text_to_be_present_in_element(FunctionsLocators.COUNT_INGREDIENT, "2")
+        )
         return self.get_text_element(FunctionsLocators.COUNT_INGREDIENT)
 
     @allure.step("Ожидание булочки")
@@ -61,10 +75,12 @@ class FunctionsPage(BasePage):
         self.enter_text(FunctionsLocators.EMAIL, email)
         self.enter_text(FunctionsLocators.PASSWORD, password)
         self.click_element(FunctionsLocators.LOGIN_BUTTON)
+        assert self.check_displaying_element(FunctionsLocators.SUBMIT_ORDER)
 
     @allure.step("Клик по Оформить заказ")
     def click_order(self):
         self.click_element(FunctionsLocators.SUBMIT_ORDER)
+        self.wait_visibility_element(FunctionsLocators.STARTING_ORDER)
 
     @allure.step("Проверить появление окна заказа")
     def check_order(self):
